@@ -4,8 +4,11 @@ import {createStackNavigator} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 
 class ItemScreen extends Component {
-  static navigationOptions = {
-    title: 'Item',
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Item',
+      headerLeft: <Icon name="menu" size={35} onPress={ () => navigation.toggleDrawer() } />
+    }
   };
   render() {
     const { navigation } = this.props;
@@ -24,5 +27,4 @@ class ItemScreen extends Component {
   }
 }
 
-
-export default ItemScreen;
+export default createStackNavigator({ ItemScreen });

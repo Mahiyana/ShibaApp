@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import {createStackNavigator} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 import { StyleSheet, ScrollView, ActivityIndicator, Text, View  } from 'react-native';
+import { Icon } from 'react-native-elements'
 
 class CategoryScreen extends Component {
-  static navigationOptions = {
-    title: 'Category',
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Category',
+      headerLeft: <Icon name="menu" size={35} onPress={ () => navigation.toggleDrawer() } />
+    }
   };
   render() {
     const { navigation } = this.props;
@@ -49,4 +53,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default CategoryScreen;
+export default createStackNavigator({ CategoryScreen });

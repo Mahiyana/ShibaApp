@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Button, View, Text } from 'react-native';
+import { Icon } from 'react-native-elements'
+import { createStackNavigator } from 'react-navigation';
 
 class HomeScreen extends Component {
-  static navigationOptions = {
-    title: 'Home',
+  static navigationOptions = ({ navigation }) => {
+    return {
+	  title: 'Home',
+      headerLeft: <Icon name="menu" size={35} onPress={ () => navigation.toggleDrawer() } />
+    }
   };
   render() {
     return (
@@ -18,4 +23,4 @@ class HomeScreen extends Component {
   }
 }
 
-export default HomeScreen;
+export default createStackNavigator({ HomeScreen });

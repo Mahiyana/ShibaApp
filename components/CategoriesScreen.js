@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { StyleSheet, ScrollView, ActivityIndicator, Text, View  } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
 import {createStackNavigator} from 'react-navigation';
+import { Icon } from 'react-native-elements'
 
 class CategoriesScreen extends Component {
-  static navigationOptions = {
-    title: 'Categories',
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Categories',
+      headerLeft: <Icon name="menu" size={35} onPress={ () => navigation.toggleDrawer() } />
+    }
   };
+
 
   constructor(props){
     super(props);
@@ -76,4 +81,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CategoriesScreen;
+export default createStackNavigator({ CategoriesScreen });

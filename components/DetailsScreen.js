@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Button, View, Text } from 'react-native';
-import {createStackNavigator} from 'react-navigation';
+import { Icon } from 'react-native-elements'
+import { createStackNavigator } from 'react-navigation';
 
 class DetailsScreen extends Component {
-  static navigationOptions = {
-    title: 'Details',
+  static navigationOptions = ({ navigation }) => {
+    return {
+	  title: 'Details',
+      headerLeft: <Icon name="menu" size={35} onPress={ () => navigation.toggleDrawer() } />
+    }
   };
   render() {
     return (
@@ -32,4 +36,4 @@ class DetailsScreen extends Component {
 }
 
 
-export default DetailsScreen;
+export default createStackNavigator({ DetailsScreen });
