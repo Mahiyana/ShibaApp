@@ -53,7 +53,7 @@ class CategoriesScreen extends Component {
               title={category.name}
               onPress={() => {
                 this.props.navigation.navigate('Category', {
-                  items: `${JSON.stringify(category.items)}`,
+                  items: JSON.stringify(category.items),
                 });
               }}
             />

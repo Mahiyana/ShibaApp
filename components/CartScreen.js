@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, View, Text } from 'react-native';
+import { AsyncStorage, Button, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { createStackNavigator } from 'react-navigation';
 
@@ -17,8 +17,18 @@ class CartScreen extends Component {
         <Text>Item</Text>
         <Text>Item</Text>
         <Button
-          title="Let's shop!"
-          onPress={() => this.props.navigation.navigate('Buy')}
+          onPress={ async () => {
+            let cart = [];
+            try {
+                cart = await AsyncStorage.getItem('cart') || [];
+                console.log("WHAT'S IN THE CART? THIS:");
+                console.log(cart);
+            } catch (error) {
+                console.log("Loading data error");
+                console.log(error.message);
+            }   
+          }}
+          title="See it"
         />
       </View>
     );
