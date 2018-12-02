@@ -81,4 +81,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default createStackNavigator({ CategoriesScreen });
+export default createStackNavigator({ CategoriesScreen }, {
+    navigationOptions: {
+        drawerLabel: () => "Products"
+    }
+});
