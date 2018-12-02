@@ -64,7 +64,8 @@ class CartScreen extends Component {
                 key={i}
                 title={item.name}
                 onPress={() => {
-                  Alert.alert(item.description);
+                  var alertString = item.description + "\n" + item.price + "$\n In cart:" + item.howmany;
+                  Alert.alert(item.name, alertString);
                 }}
               />
             ))
@@ -88,6 +89,7 @@ class CartScreen extends Component {
           );  
         }}
         title="Clear cart"
+        color="#87CEEB"
       />    
        <Button
         onPress={() => {

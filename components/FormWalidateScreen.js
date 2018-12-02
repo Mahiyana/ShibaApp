@@ -27,7 +27,7 @@ class FormWalidateScreen extends Component {
     const navigation = this.props.navigation.dangerouslyGetParent();
     const items = JSON.parse(navigation.getParam('formData', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     return(
-      <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
+      <View>
         <Text style={{fontSize: 25}}>Your merch will be sent using following data:</Text>
         <Text style={{fontSize: 25}}>{items.name}</Text>
         <Text style={{fontSize: 25}}>{items.city}</Text>
@@ -67,12 +67,15 @@ class FormWalidateScreen extends Component {
           );
         }}
         title="It's correct"
+        containerViewStyle={{width: '100%'}}
       />
        <Button
         onPress={() => {
            this.props.navigation.goBack(); //TODO fix 
         }}
         title="I need to change something"
+        containerViewStyle={{width: '100%'}}
+        color="#4682B4"
       />
 
       </View>
