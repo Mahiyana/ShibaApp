@@ -56,7 +56,12 @@ class FormWalidateScreen extends Component {
                              },
                     body: bodyJSON
                   })                  
-                });
+                }).then(() => {
+                  AsyncStorage.removeItem('cart')
+                }).then(() => {
+                  Alert.alert('Await our glorous email and we will await your money.');
+                  this.props.navigation.navigate('Home');                
+                })
               }},
             ]
           );
@@ -65,7 +70,7 @@ class FormWalidateScreen extends Component {
       />
        <Button
         onPress={() => {
-           this.props.navigation.navigate('Form')
+           this.props.navigation.goBack(); //TODO fix 
         }}
         title="I need to change something"
       />
