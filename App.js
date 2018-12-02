@@ -25,7 +25,12 @@ const RootStack = createDrawerNavigator(
 	contentOptions: {
 		items: [
 			'Home',
-			'Details'
+            'Cart',
+            'Watched',
+            'Categories',
+            'Category',
+            'Item',
+            'Terms'
 		]
 	},
   }
@@ -34,11 +39,23 @@ const RootStack = createDrawerNavigator(
 const RootDrawer = createDrawerNavigator({ RootStack }, {
 	contentOptions: {
 		items: {
-			Home: HomeScreen,
+        	Home: HomeScreen,
+            Cart: CartScreen,
+            Watched: WatchedScreen,
+            Categories: CategoriesScreen,
+            Category: CategoryScreen,
+            Item: ItemScreen,
+            Terms: TermsScreen
 		}
 	},
     paths: {
-        Home: HomeScreen,
+           Home: HomeScreen,
+           Cart: CartScreen,
+           Watched: WatchedScreen,
+           Categories: CategoriesScreen,
+           Category: CategoryScreen,
+           Item: ItemScreen,
+           Terms: TermsScreen
     }
 });
 

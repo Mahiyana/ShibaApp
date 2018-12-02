@@ -42,12 +42,20 @@ class ItemScreen extends Component {
                 try {
                     await AsyncStorage.setItem('cart', JSON.stringify(cart));
                 } catch (error) {
-                    console.log("Saving data error");
-                    console.log(error.message);
+                    //console.log("Saving data error");
+                    //console.log(error.message);
                 }            
             } catch (error) {
-                console.log("Loading data error");
-                console.log(error.message);
+                //console.log("Loading data error");
+                //console.log(error.message);
+                cart = [{"name": item.name, "price": item.price, "description": item.description, "howmany": 1}];
+                try {
+                    await AsyncStorage.setItem('cart', JSON.stringify(cart));
+                } catch (error) {
+                    //console.log("Saving data error");
+                    //console.log(error.message);
+                }
+
             }
             Alert.alert('Product added to cart!');
           }}
