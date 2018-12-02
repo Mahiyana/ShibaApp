@@ -37,7 +37,7 @@ class ItemScreen extends Component {
                 console.log("Loading data error");
                 console.log(error.message);
             }
-            //Alert.alert('You tapped the button!');
+            Alert.alert('Product added to cart!');
           }}
           title="Buy"
         />        
