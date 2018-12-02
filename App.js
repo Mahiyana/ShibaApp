@@ -8,6 +8,8 @@ import ItemScreen from './components/ItemScreen';
 import CartScreen from './components/CartScreen';
 import WatchedScreen from './components/WatchedScreen';
 import TermsScreen from './components/TermsScreen';
+import FormScreen from './components/FormScreen';
+import FormWalidateScreen from './components/FormWalidateScreen';
 import { Icon } from 'react-native-elements'
 
 
@@ -19,7 +21,9 @@ const RootStack = createDrawerNavigator(
     Categories: CategoriesScreen,
     Category: CategoryScreen,
     Item: ItemScreen,
-    Terms: TermsScreen
+    Terms: TermsScreen,
+    Form: FormScreen,
+    FormWalidate: FormWalidateScreen,
   },
   {
 	contentOptions: {
@@ -30,7 +34,9 @@ const RootStack = createDrawerNavigator(
             'Categories',
             'Category',
             'Item',
-            'Terms'
+            'Terms',
+            'Form',
+            'FormWalidate',
 		]
 	},
   }
@@ -45,7 +51,9 @@ const RootDrawer = createDrawerNavigator({ RootStack }, {
             Categories: CategoriesScreen,
             Category: CategoryScreen,
             Item: ItemScreen,
-            Terms: TermsScreen
+            Terms: TermsScreen,
+            Form: FormScreen,
+            FormWalidate: FormWalidateScreen,
 		}
 	},
     paths: {
@@ -55,7 +63,9 @@ const RootDrawer = createDrawerNavigator({ RootStack }, {
            Categories: CategoriesScreen,
            Category: CategoryScreen,
            Item: ItemScreen,
-           Terms: TermsScreen
+           Terms: TermsScreen,
+           Form: FormScreen,
+           FormWalidate: FormWalidateScreen,
     }
 });
 

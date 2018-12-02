@@ -89,6 +89,12 @@ class CartScreen extends Component {
         }}
         title="Clear cart"
       />    
+       <Button
+        onPress={() => {
+           this.props.navigation.navigate('Form')
+        }}
+        title="Buy it all!"
+      />    
       
       </ScrollView>
     );
