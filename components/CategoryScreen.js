@@ -22,7 +22,7 @@ class CategoryScreen extends Component {
     const items = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.forceUpdate();
   }
-
+  
   render() {
     const navigation = this.props.navigation.dangerouslyGetParent();
     const items = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));

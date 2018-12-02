@@ -14,10 +14,7 @@ class HomeScreen extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Me doin a welcome!</Text>
-        <Button
-          title="Let's shop!"
-          onPress={() => this.props.navigation.navigate('Details')}
-        />
+        <Text style={{fontSize: 80}}>🐕</Text>
       </View>
     );
   }
