@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, StyleSheet, ScrollView, ActivityIndicator, AsyncStorage, Button, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements'
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, NavigationEvents } from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
+
 
 class CartScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -12,9 +13,24 @@ class CartScreen extends Component {
     }
   };
 
+
   constructor(props){
     super(props);
     this.state ={ isLoading: true}
+    this.props.navigation.addListener('willFocus', this.load)
+  }
+
+  load = () => {
+    return cart = (AsyncStorage.getItem('cart') || [])
+    .then((response) => {
+      this.setState({
+        cartItems: JSON.parse(response),
+      })
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
+    this.forceUpdate();
   }
 
   componentDidMount(){
@@ -23,10 +39,7 @@ class CartScreen extends Component {
       this.setState({
         isLoading: false,
         cartItems: JSON.parse(response),
-      }, function(){
-
-      });
-
+      })
     })
     .catch((error) =>{
       console.error(error);
@@ -41,8 +54,6 @@ class CartScreen extends Component {
         </View>
       )
     }
-    console.log("CART ITEMS:");
-    console.log(typeof this.state.cartItems);
     return(
     <ScrollView style={styles.container}>
       <List>
