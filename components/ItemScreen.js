@@ -57,7 +57,14 @@ class ItemScreen extends Component {
                 }
 
             }
-            Alert.alert('Product added to cart!');
+            Alert.alert(
+            'Awesome choice!',
+            'Product added to the cart. Continue shopping or go to the cart?',
+            [
+              {text: 'Continue shopping', onPress: () => null},
+              {text: 'Go to the cart', onPress: () => this.props.navigation.navigate('Cart')},
+            ], {}
+          );
           }}
           title="Buy"
         />        

@@ -56,7 +56,7 @@ class CartScreen extends Component {
     }
     if(this.state.cartItems){
     return(
-      <ScrollView style={styles.container}>
+      <ScrollView>
         <List>
           {
             this.state.cartItems.map((item, i) => (
