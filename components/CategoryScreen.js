@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {createStackNavigator} from 'react-navigation';
+import {createStackNavigator, NavigationEvents} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 import { StyleSheet, ScrollView, ActivityIndicator, Text, View  } from 'react-native';
 import { Icon } from 'react-native-elements'
@@ -11,6 +11,18 @@ class CategoryScreen extends Component {
       headerLeft: <Icon name="menu" size={35} onPress={ () => navigation.toggleDrawer() } />
     }
   };
+
+  constructor(props){
+    super(props);
+    this.props.navigation.addListener('willFocus', this.load)
+  }
+
+  load = () => {
+    const navigation = this.props.navigation.dangerouslyGetParent();
+    const items = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
+    this.forceUpdate();
+  }
+
   render() {
     const navigation = this.props.navigation.dangerouslyGetParent();
     const items = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
