@@ -91,21 +91,22 @@ class FormScreen extends Component {
 
   render() {
     return (
-      <View style={styles.wrapper}>
-        <View>
+      <View style={{flexDirection: 'column',flex: 1}}>
+        <ScrollView>
           <GenerateForm
             ref={(c) => {
               this.formGenerator = c;
             }}
             fields={fields}
           />
-        </View>
-        <View style={styles.submitButton}>
+        </ScrollView>
+        <View style={[{ width: "95%", marginTop: 70, marginLeft: 10, marginBottom: 30}]}>
+        <Text>By clicking next you show that you accept Terms of Service - it is avaliable in drawer menu if you actually want to read it.</Text>
         <Button
           onPress={() => { 
             const formValues = this.formGenerator.getValues();
-            if (Object.values(formValues).includes('')){
-              Alert.alert('All fields are required. Please fill them in.')
+            if (Object.values(formValues).includes('') || !formValues.terms ){
+              Alert.alert('Little problem', 'All fields are required. Please fill them in. Or maybe you are trying to avoid accepting our awesome Terms of Use, huh?')
             } else {
               this.props.navigation.navigate('FormWalidate', {
                 formData: JSON.stringify(formValues),
@@ -114,7 +115,6 @@ class FormScreen extends Component {
           }}
         title="Next"
         />
-        <Text>By clicking Next you accept Terms of Service (avaliable in drawer menu if you actually want to read it).</Text>
         </View>
       </View>
     );

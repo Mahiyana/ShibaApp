@@ -27,16 +27,20 @@ class FormWalidateScreen extends Component {
     const navigation = this.props.navigation;
     const items = JSON.parse(navigation.getParam('formData', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     return(
-      <View>
-        <Text style={{fontSize: 25}}>Your merch will be sent using following data:</Text>
-        <Text style={{fontSize: 25}}>{items.name}</Text>
-        <Text style={{fontSize: 25}}>{items.city}</Text>
-        <Text style={{fontSize: 25}}>{items.cityCode}</Text>
-        <Text style={{fontSize: 25}}>{items.street}</Text>
-        <Text style={{fontSize: 25}}>{items.streetNumber}</Text>
-        <Text style={{fontSize: 25}}>{items.email}</Text>
-        <Text style={{fontSize: 25}}>{items.phoneNumber}</Text>
-        <Text style={{fontSize: 25}}>{items.shipping}</Text>
+      <View style={{flexDirection: 'column',flex: 1}}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ fontSize: 20 }}>Your merch will be sent using following data:</Text>
+        <Text style={{ fontSize: 20 }}>{items.name}</Text>
+        <Text style={{ fontSize: 20 }}>{items.city}</Text>
+        <Text style={{ fontSize: 20 }}>{items.cityCode}</Text>
+        <Text style={{ fontSize: 20 }}>{items.street}</Text>
+        <Text style={{ fontSize: 20 }}>{items.streetNumber}</Text>
+        <Text style={{ fontSize: 20 }}>{items.email}</Text>
+        <Text style={{ fontSize: 20 }}>{items.phoneNumber}</Text>
+        <Text style={{ fontSize: 20 }}>{items.shipping}</Text>
+        </View>
+
+        <View style={[{ width: "95%", margin: 10, alignSelf: "flex-end"}]}>
         <Button
         onPress={() => {
           Alert.alert(
@@ -69,7 +73,9 @@ class FormWalidateScreen extends Component {
         title="It's correct"
         containerViewStyle={{width: '100%'}}
       />
-       <Button
+      </View>
+      <View style={[{ width: "95%", margin: 10, alignSelf: "flex-end"}]}>
+      <Button
         onPress={() => {
            this.props.navigation.goBack(); 
         }}
@@ -77,6 +83,7 @@ class FormWalidateScreen extends Component {
         containerViewStyle={{width: '100%'}}
         color="#4682B4"
       />
+      </View>
 
       </View>
     );
