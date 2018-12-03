@@ -36,6 +36,10 @@ class CartScreen extends Component {
   componentDidMount(){
   return cart = (AsyncStorage.getItem('cart') || [])
     .then((response) => {
+      cartItems = JSON.parse(response);
+      //cartItems.map((item,i) => {
+      //  console.log(i);
+      //})
       this.setState({
         isLoading: false,
         cartItems: JSON.parse(response),
@@ -49,20 +53,35 @@ class CartScreen extends Component {
   render() {
     if(this.state.isLoading){
       return(
-        <View style={styles.activity}>
+        <View>
           <ActivityIndicator/>
         </View>
       )
     }
     if(this.state.cartItems){
+    var titledItems = [];
+    this.state.cartItems.map((item,i) => {
+        var tempItem = item;
+        if (parseInt(item.howmany) == 1){
+          tempItem.title = item.name;
+        } else {
+          tempItem.title = item.name + " x" + item.howmany;
+        }
+        tempItem.price = tempItem.price + '$'
+        titledItems.push(tempItem);
+      })
+    console.log(titledItems);  
     return(
+      <View style={{flexDirection: 'column',flex: 1}}>
       <ScrollView>
         <List>
           {
-            this.state.cartItems.map((item, i) => (
+            titledItems.map((item, i) => (
               <ListItem
                 key={i}
-                title={item.name}
+                title={item.title} 
+                subtitle={item.price}
+                rightIcon={<Icon name={'delete'} size={20}/>}
                 onPress={() => {
                   var alertString = item.description + "\n" + item.price + "$\n In cart:" + item.howmany;
                   Alert.alert(item.name, alertString);
@@ -72,6 +91,8 @@ class CartScreen extends Component {
           }
         </List>
 
+      </ScrollView>
+      <View style={[{ width: "95%", margin: 10}]}> 
       <Button
         onPress={() => {
           Alert.alert(
@@ -91,14 +112,16 @@ class CartScreen extends Component {
         title="Clear cart"
         color="#87CEEB"
       />    
+      </View>
+      <View style={[{ width: "95%", margin: 10}]}> 
        <Button
         onPress={() => {
            this.props.navigation.navigate('Form')
         }}
         title="Buy it all!"
       />    
-      
-      </ScrollView>
+      </View>
+      </View>
     );
   }
   return(
@@ -112,22 +135,6 @@ class CartScreen extends Component {
   );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   paddingBottom: 22
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
-  activity: {
-    flex: 1,
-    padding: 20,
-  }
-})
 
 export default createStackNavigator({ CartScreen }, {
     navigationOptions: {

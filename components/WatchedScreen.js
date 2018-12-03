@@ -49,7 +49,7 @@ class WatchedScreen extends Component {
   render() {
     if(this.state.isLoading){
       return(
-        <View style={styles.activity}>
+        <View>
           <ActivityIndicator/>
         </View>
       )
@@ -57,6 +57,7 @@ class WatchedScreen extends Component {
     if(this.state.watchedItems){
     console.log(this.state.watchedItems);
     return(
+      <View style={{flexDirection: 'column',flex: 1}}>
       <ScrollView>
         <List>
           {
@@ -64,6 +65,7 @@ class WatchedScreen extends Component {
               <ListItem
                 key={i}
                 title={item.name}
+                rightIcon={<Icon name={'delete'} size={20}/>}
                 onPress={() => {
                   var alertString = item.description + "\n" + item.price;
                   Alert.alert(item.name, alertString);
@@ -72,7 +74,9 @@ class WatchedScreen extends Component {
             ))
           }
         </List>
-
+      </ScrollView>
+      
+      <View style={[{ width: "95%", margin: 10, alignSelf: "flex-end"}]}>
       <Button
         onPress={() => {
           Alert.alert(
@@ -91,8 +95,9 @@ class WatchedScreen extends Component {
         }}
         title="Remove all"
       />    
-      
-      </ScrollView>
+      </View>
+
+      </View>
     );
   }
   return(
@@ -106,22 +111,6 @@ class WatchedScreen extends Component {
   );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   paddingBottom: 22
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
-  activity: {
-    flex: 1,
-    padding: 20,
-  }
-})
 
 export default createStackNavigator({ WatchedScreen }, {
     navigationOptions: {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, View, Text, AsyncStorage } from 'react-native';
+import { Alert, Button, View, Text, AsyncStorage, ScrollView } from 'react-native';
 import {createStackNavigator, NavigationEvents} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 import { Icon } from 'react-native-elements'
@@ -28,10 +28,13 @@ class ItemScreen extends Component {
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.item = item;
     return (
-      <View>
+      <View style={{flexDirection: 'column',flex: 1}}>
+        <ScrollView>
         <Text>{item.name}</Text>
         <Text>{item.price}$</Text>
         <Text>{item.description}</Text>
+        </ScrollView>
+        <View style={[{ width: "95%", margin: 10, alignSelf: "flex-end"}]}>
         <Button
           onPress={ async () => {
             let cart = [];
@@ -72,8 +75,10 @@ class ItemScreen extends Component {
           );
           }}
           title="Buy"
-        /> 
+        />
+        </View>
 
+       <View style={[{ width: "95%", margin: 10}]}>
        <Button
           onPress={ async () => {
             let watched = {};
@@ -112,7 +117,8 @@ class ItemScreen extends Component {
             }
           }}
           title="Add to watched items"
-        />  
+        />
+        </View>
 
      </View>
     );

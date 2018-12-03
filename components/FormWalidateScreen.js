@@ -59,7 +59,7 @@ class FormWalidateScreen extends Component {
                 }).then(() => {
                   AsyncStorage.removeItem('cart')
                 }).then(() => {
-                  Alert.alert('Await our glorous email and we will await your money.');
+                  Alert.alert('Await our glorious email and we will await your moneys.');
                   this.props.navigation.navigate('Home');                
                 })
               }},
