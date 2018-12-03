@@ -47,8 +47,8 @@ class FormWalidateScreen extends Component {
               {text: 'Cool', onPress: async () => {
                 AsyncStorage.getItem('cart').then((cart) => {
                   var bodyJSON = JSON.stringify({"userData": items, "cartData": cart});
-                  //console.log(bodyJSON);
-                  fetch('http://10.182.12.88:8000/', {
+                  console.log(bodyJSON);
+                  fetch('http://10.0.0.238:8000/', {
                     method: 'POST',
                     headers: { 
                              'Accept': 'application/json',

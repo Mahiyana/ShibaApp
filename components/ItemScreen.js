@@ -28,7 +28,7 @@ class ItemScreen extends Component {
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.item = item;
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View>
         <Text>{item.name}</Text>
         <Text>{item.price}$</Text>
         <Text>{item.description}</Text>
@@ -72,7 +72,48 @@ class ItemScreen extends Component {
           );
           }}
           title="Buy"
-        />        
+        /> 
+
+       <Button
+          onPress={ async () => {
+            let watched = {};
+            console.log("PRESSED");
+            try {
+                watched = await AsyncStorage.getItem('watched') || {};
+                watched = JSON.parse(watched);
+                var watchedKey = String(item.name);
+                if (watchedKey in watched){
+                  delete watched[watchedKey]; 
+                } else {
+                  watched[watchedKey] = {"name": item.name, "price": item.price, "description": item.description};
+                }
+                try {
+                    console.log("WATCHED");
+                    console.log(watched);
+                    await AsyncStorage.setItem('watched', JSON.stringify(watched));
+                } catch (error) {
+                    console.log("Saving data error");
+                    console.log(error.message);
+                }            
+            } catch (error) {
+                console.log("Loading data error");
+                console.log(error.message);
+                var watchedKey = String(item.name);
+                watched = { watchedKey: {"name": item.name, "price": item.price, "description": item.description}};
+                try {
+                    console.log("WATCHED");
+                    console.log(watched);
+                    await AsyncStorage.setItem('watched', JSON.stringify(watched));
+                } catch (error) {
+                    console.log("Saving data error");
+                    console.log(error.message);
+                }
+
+            }
+          }}
+          title="Add to watched items"
+        />  
+
      </View>
     );
   }
