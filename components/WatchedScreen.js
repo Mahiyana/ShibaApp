@@ -54,8 +54,9 @@ class WatchedScreen extends Component {
         </View>
       )
     }
-    if(this.state.watchedItems){
-    console.log(this.state.watchedItems);
+    if(this.state.watchedItems && Object.keys(this.state.watchedItems).length != 0){
+    //console.log(this.state.watchedItems);
+    //console.log(Object.keys(this.state.watchedItems));
     return(
       <View style={{flexDirection: 'column',flex: 1}}>
       <ScrollView>

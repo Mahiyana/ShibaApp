@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, View, Text, AsyncStorage, ScrollView } from 'react-native';
+import { Alert, Button, View, Text, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
 import {createStackNavigator, NavigationEvents} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 import { Icon } from 'react-native-elements'
@@ -14,16 +14,72 @@ class ItemScreen extends Component {
 
   constructor(props){
     super(props);
+    this.state ={ isLoading: true, buttonTitle: 'Default', buttonColor: 'blue'}
     this.props.navigation.addListener('willFocus', this.load)
   }
 
   load = () => {
+    console.log("LOAD");
     const navigation = this.props.navigation.dangerouslyGetParent();
-    const items = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
+    const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
+    return watched = (AsyncStorage.getItem('watched') || [])
+    .then((response) => {
+      if (response && item.name in JSON.parse(response)){
+        this.setState({
+          isLoading: false,
+          buttonTitle: 'Delete',
+          buttonColor: 'grey'
+        })
+      } else {
+       this.setState({
+          isLoading: false,
+          buttonTitle: 'Add',
+          buttonColor: 'blue'
+        })
+      }
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
+    this.forceUpdate();
+  }
+
+  componentDidMount(){
+    const navigation = this.props.navigation.dangerouslyGetParent();
+    const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
+    return watched = (AsyncStorage.getItem('watched') || {})
+    .then((response) => {
+      if (response && item.name in JSON.parse(response)){
+        this.setState({
+          isLoading: false,
+          buttonTitle: 'Delete',
+          buttonColor: 'grey'
+        })
+      } else {
+       this.setState({
+          isLoading: false,
+          buttonTitle: 'Add',
+          buttonColor: 'blue'
+        })
+      }
+    })
+    .catch((error) =>{
+      console.log("ERROR");
+      console.error(error);
+    });
     this.forceUpdate();
   }
 
   render() {
+    if(this.state.isLoading){
+      return(
+        <View>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
+    //console.log(this.state.buttonTitle);
+    //console.log(this.state.buttonColor);
     const navigation = this.props.navigation.dangerouslyGetParent();
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.item = item;
@@ -50,18 +106,12 @@ class ItemScreen extends Component {
                 try {
                     await AsyncStorage.setItem('cart', JSON.stringify(cart));
                 } catch (error) {
-                    //console.log("Saving data error");
-                    //console.log(error.message);
                 }            
             } catch (error) {
-                //console.log("Loading data error");
-                //console.log(error.message);
                 cart = [{"name": item.name, "price": item.price, "description": item.description, "howmany": 1}];
                 try {
                     await AsyncStorage.setItem('cart', JSON.stringify(cart));
                 } catch (error) {
-                    //console.log("Saving data error");
-                    //console.log(error.message);
                 }
 
             }
@@ -82,41 +132,34 @@ class ItemScreen extends Component {
        <Button
           onPress={ async () => {
             let watched = {};
-            console.log("PRESSED");
             try {
                 watched = await AsyncStorage.getItem('watched') || {};
                 watched = JSON.parse(watched);
-                var watchedKey = String(item.name);
-                if (watchedKey in watched){
-                  delete watched[watchedKey]; 
+                var watchedSaveKey = String(item.name);
+                if (watchedSaveKey in watched){
+                  delete watched[watchedSaveKey]; 
                 } else {
-                  watched[watchedKey] = {"name": item.name, "price": item.price, "description": item.description};
+                  watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description};
                 }
                 try {
-                    console.log("WATCHED");
-                    console.log(watched);
                     await AsyncStorage.setItem('watched', JSON.stringify(watched));
                 } catch (error) {
-                    console.log("Saving data error");
-                    console.log(error.message);
                 }            
             } catch (error) {
-                console.log("Loading data error");
-                console.log(error.message);
-                var watchedKey = String(item.name);
-                watched = { watchedKey: {"name": item.name, "price": item.price, "description": item.description}};
+                var watchedSaveKey = String(item.name);
+                watched = {}
+                watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description};
+                //watched = { watchedSaveKey: {"name": item.name, "price": item.price, "description": item.description}};
                 try {
-                    console.log("WATCHED");
-                    console.log(watched);
                     await AsyncStorage.setItem('watched', JSON.stringify(watched));
                 } catch (error) {
-                    console.log("Saving data error");
-                    console.log(error.message);
                 }
 
             }
+            this.forceUpdate(); //TODO it doesn't reload
           }}
-          title="Add to watched items"
+          title={this.state.buttonTitle}
+          color={this.state.buttonColor}
         />
         </View>
 

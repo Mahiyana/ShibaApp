@@ -70,7 +70,6 @@ class CartScreen extends Component {
         tempItem.price = tempItem.price + '$'
         titledItems.push(tempItem);
       })
-    console.log(titledItems);  
     return(
       <View style={{flexDirection: 'column',flex: 1}}>
       <ScrollView>
