@@ -19,7 +19,6 @@ class ItemScreen extends Component {
   }
 
   load = () => {
-    console.log("LOAD");
     const navigation = this.props.navigation.dangerouslyGetParent();
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     return watched = (AsyncStorage.getItem('watched') || [])
