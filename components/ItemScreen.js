@@ -30,7 +30,7 @@ class ItemScreen extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>{item.name}</Text>
-        <Text>{item.price}</Text>
+        <Text>{item.price}$</Text>
         <Text>{item.description}</Text>
         <Button
           onPress={ async () => {
@@ -38,7 +38,12 @@ class ItemScreen extends Component {
             try {
                 cart = await AsyncStorage.getItem('cart') || [];
                 cart = JSON.parse(cart);
-                cart.push({"name": item.name, "price": item.price, "description": item.description, "howmany": 1});
+                var itemIndex = cart.findIndex(x => x.name==item.name);
+                if (itemIndex == -1){
+                  cart.push({"name": item.name, "price": item.price, "description": item.description, "howmany": 1});
+                } else {
+                  cart[itemIndex].howmany = parseInt(cart[itemIndex].howmany) + 1;
+                }
                 try {
                     await AsyncStorage.setItem('cart', JSON.stringify(cart));
                 } catch (error) {
