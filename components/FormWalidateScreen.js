@@ -71,7 +71,7 @@ class FormWalidateScreen extends Component {
       />
        <Button
         onPress={() => {
-           this.props.navigation.goBack(); //TODO fix 
+           this.props.navigation.goBack(); 
         }}
         title="I need to change something"
         containerViewStyle={{width: '100%'}}

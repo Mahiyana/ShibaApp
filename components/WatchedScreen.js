@@ -55,8 +55,6 @@ class WatchedScreen extends Component {
       )
     }
     if(this.state.watchedItems && Object.keys(this.state.watchedItems).length != 0){
-    //console.log(this.state.watchedItems);
-    //console.log(Object.keys(this.state.watchedItems));
     return(
       <View style={{flexDirection: 'column',flex: 1}}>
       <ScrollView>
@@ -66,10 +64,29 @@ class WatchedScreen extends Component {
               <ListItem
                 key={i}
                 title={item.name}
-                rightIcon={<Icon name={'delete'} size={20}/>}
+                rightIcon={<Icon name={'favorite'} size={20}/>}
                 onPress={() => {
                   var alertString = item.description + "\n" + item.price;
-                  Alert.alert(item.name, alertString);
+                  Alert.alert(
+                    'Awesome action',
+                    'What do you want to do with this item?',
+                    [
+                      {text: 'Nothing...', onPress: () => null, style: 'cancel'},
+                      {text: 'See it!', onPress: () => {
+                        this.props.navigation.navigate('Item', {
+                          items: JSON.stringify(item)
+                        })  
+                      }},
+                      {text: 'Delete it!', onPress: async () => {
+                        this.state.watchedItems
+                        delete this.state.watchedItems[item.name];
+                        AsyncStorage.setItem('watched', JSON.stringify(this.state.watchedItems)).then(() => {
+                          this.state.watchedItems = null;
+                          this.forceUpdate();
+                        });
+                      }},
+                    ], {}
+                  );
                 }}
               />
             ))
@@ -103,11 +120,7 @@ class WatchedScreen extends Component {
   }
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{fontSize: 25, textAlign: 'center'}}>You are not watching any items at the moment. Go shopping to change that!</Text>
-      <Button
-          title="Let’s find something to watch!"
-          onPress={() => this.props.navigation.navigate('Categories')}
-        />
+      <Text style={{textAlign: 'center'}}>You are not watching any items at the moment. Go shopping to change that!</Text>
     </View>
   );
   }

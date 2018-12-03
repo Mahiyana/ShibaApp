@@ -37,9 +37,6 @@ class CartScreen extends Component {
   return cart = (AsyncStorage.getItem('cart') || [])
     .then((response) => {
       cartItems = JSON.parse(response);
-      //cartItems.map((item,i) => {
-      //  console.log(i);
-      //})
       this.setState({
         isLoading: false,
         cartItems: JSON.parse(response),
@@ -126,10 +123,6 @@ class CartScreen extends Component {
   return(
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={{fontSize: 25, textAlign: 'center'}}>Your shopping cart is empty - go fetch some awesome merch to make it full!</Text>
-      <Button
-          title="Yeah! Let’s shop!"
-          onPress={() => this.props.navigation.navigate('Categories')}
-        />
     </View>
   );
   }

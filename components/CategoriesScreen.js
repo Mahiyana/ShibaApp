@@ -36,7 +36,6 @@ class CategoriesScreen extends Component {
   }
 
   render() {
-    console.log(this.props.navigation.dangerouslyGetParent().state.routes);
     if(this.state.isLoading){
       return(
         <View style={styles.activity}>
