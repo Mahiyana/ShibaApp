@@ -36,6 +36,7 @@ class CategoriesScreen extends Component {
   }
 
   render() {
+    console.log(this.props.navigation.dangerouslyGetParent().state.routes);
     if(this.state.isLoading){
       return(
         <View style={styles.activity}>
@@ -81,8 +82,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default createStackNavigator({ CategoriesScreen }, {
-    navigationOptions: {
-        drawerLabel: () => "Products"
-    }
-});
+export default CategoriesScreen;

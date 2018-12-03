@@ -18,13 +18,13 @@ class FormWalidateScreen extends Component {
   }
 
   load = () => {
-    const navigation = this.props.navigation.dangerouslyGetParent();
+    const navigation = this.props.navigation;
     const items = JSON.parse(navigation.getParam('formData', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.forceUpdate();
   }
   
   render() {
-    const navigation = this.props.navigation.dangerouslyGetParent();
+    const navigation = this.props.navigation;
     const items = JSON.parse(navigation.getParam('formData', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     return(
       <View>
@@ -100,8 +100,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default createStackNavigator({ FormWalidateScreen }, {
-    navigationOptions: {
-        drawerLabel: () => null
-    }
-});
+export default FormWalidateScreen;

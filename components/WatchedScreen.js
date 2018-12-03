@@ -113,8 +113,4 @@ class WatchedScreen extends Component {
   }
 }
 
-export default createStackNavigator({ WatchedScreen }, {
-    navigationOptions: {
-        drawerLabel: () => "Watched Items"
-    }
-});
+export default WatchedScreen;

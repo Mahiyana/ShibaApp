@@ -121,8 +121,4 @@ class FormScreen extends Component {
   }
 }
 
-export default createStackNavigator({ FormScreen }, {
-    navigationOptions: {
-        drawerLabel: () => null
-    }
-});
+export default FormScreen;

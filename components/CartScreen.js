@@ -135,8 +135,4 @@ class CartScreen extends Component {
   }
 }
 
-export default createStackNavigator({ CartScreen }, {
-    navigationOptions: {
-        drawerLabel: () => "Shopping Cart"
-    }
-});
+export default CartScreen;

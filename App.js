@@ -12,9 +12,8 @@ import FormScreen from './components/FormScreen';
 import FormWalidateScreen from './components/FormWalidateScreen';
 import { Icon } from 'react-native-elements'
 
-
-const RootStack = createDrawerNavigator(
-  {
+function newStack(route) {
+  const routes = {
     Home: HomeScreen,
     Cart: CartScreen,
     Watched: WatchedScreen,
@@ -24,50 +23,25 @@ const RootStack = createDrawerNavigator(
     Terms: TermsScreen,
     Form: FormScreen,
     FormWalidate: FormWalidateScreen,
-  },
-  {
-	contentOptions: {
-		items: [
-			'Home',
-            'Cart',
-            'Watched',
-            'Categories',
-            'Category',
-            'Item',
-            'Terms',
-            'Form',
-            'FormWalidate',
-		]
-	},
-  }
-);
-
-const RootDrawer = createDrawerNavigator({ RootStack }, {
-	contentOptions: {
-		items: {
-        	Home: HomeScreen,
-            Cart: CartScreen,
-            Watched: WatchedScreen,
-            Categories: CategoriesScreen,
-            Category: CategoryScreen,
-            Item: ItemScreen,
-            Terms: TermsScreen,
-            Form: FormScreen,
-            FormWalidate: FormWalidateScreen,
-		}
-	},
-    paths: {
-           Home: HomeScreen,
-           Cart: CartScreen,
-           Watched: WatchedScreen,
-           Categories: CategoriesScreen,
-           Category: CategoryScreen,
-           Item: ItemScreen,
-           Terms: TermsScreen,
-           Form: FormScreen,
-           FormWalidate: FormWalidateScreen,
+  };
+  return createStackNavigator(routes,
+    {
+      initialRouteName: route,
+      navigationOptions: routes[route].navigationOptions
     }
-});
+  );
+}
 
-const App = createAppContainer(RootStack);
+const RootStack = newStack('Home');
+
+const RootDrawer = createDrawerNavigator({
+  S_Home: newStack('Home'),
+  S_Cart: newStack('Cart'),
+  S_Watched: newStack('Watched'),
+  S_Categories: newStack('Categories'),
+  S_Terms: newStack('Terms')
+}, {});
+
+
+const App = createAppContainer(RootDrawer);
 export default App;

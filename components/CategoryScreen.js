@@ -18,13 +18,13 @@ class CategoryScreen extends Component {
   }
 
   load = () => {
-    const navigation = this.props.navigation.dangerouslyGetParent();
+    const navigation = this.props.navigation;
     const items = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.forceUpdate();
   }
   
   render() {
-    const navigation = this.props.navigation.dangerouslyGetParent();
+    const navigation = this.props.navigation;
     const items = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     return(
       <ScrollView style={styles.container}>
@@ -65,8 +65,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default createStackNavigator({ CategoryScreen }, {
-    navigationOptions: {
-        drawerLabel: () => null
-    }
-});
+export default CategoryScreen;

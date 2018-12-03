@@ -19,7 +19,7 @@ class ItemScreen extends Component {
   }
 
   load = () => {
-    const navigation = this.props.navigation.dangerouslyGetParent();
+    const navigation = this.props.navigation;
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     return watched = (AsyncStorage.getItem('watched') || [])
     .then((response) => {
@@ -44,7 +44,7 @@ class ItemScreen extends Component {
   }
 
   componentDidMount(){
-    const navigation = this.props.navigation.dangerouslyGetParent();
+    const navigation = this.props.navigation;
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     return watched = (AsyncStorage.getItem('watched') || {})
     .then((response) => {
@@ -79,7 +79,7 @@ class ItemScreen extends Component {
     }
     //console.log(this.state.buttonTitle);
     //console.log(this.state.buttonColor);
-    const navigation = this.props.navigation.dangerouslyGetParent();
+    const navigation = this.props.navigation;
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.item = item;
     return (
@@ -167,9 +167,5 @@ class ItemScreen extends Component {
   }
 }
 
-export default createStackNavigator({ ItemScreen }, {
-    navigationOptions: {
-        drawerLabel: () => null
-    }
-});
+export default ItemScreen;
 

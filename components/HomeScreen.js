@@ -20,4 +20,4 @@ class HomeScreen extends Component {
   }
 }
 
-export default createStackNavigator({ HomeScreen });
+export default HomeScreen;

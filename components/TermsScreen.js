@@ -38,8 +38,4 @@ class TermsScreen extends Component {
   }
 }
 
-export default createStackNavigator({ TermsScreen }, {
-    navigationOptions: {
-        drawerLabel: () => "Terms of Use"
-    }
-});
+export default TermsScreen;
