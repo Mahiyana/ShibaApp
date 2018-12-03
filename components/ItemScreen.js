@@ -26,13 +26,13 @@ class ItemScreen extends Component {
       if (response && item.name in JSON.parse(response)){
         this.setState({
           isLoading: false,
-          buttonTitle: 'Delete',
+          buttonTitle: 'Delete from watched items',
           buttonColor: 'grey'
         })
       } else {
        this.setState({
           isLoading: false,
-          buttonTitle: 'Add',
+          buttonTitle: 'Add to watched items',
           buttonColor: 'blue'
         })
       }
@@ -51,13 +51,13 @@ class ItemScreen extends Component {
       if (response && item.name in JSON.parse(response)){
         this.setState({
           isLoading: false,
-          buttonTitle: 'Delete',
+          buttonTitle: 'Delete from watched items',
           buttonColor: 'grey'
         })
       } else {
        this.setState({
           isLoading: false,
-          buttonTitle: 'Add',
+          buttonTitle: 'Add to watched items',
           buttonColor: 'blue'
         })
       }
@@ -77,8 +77,6 @@ class ItemScreen extends Component {
         </View>
       )
     }
-    //console.log(this.state.buttonTitle);
-    //console.log(this.state.buttonColor);
     const navigation = this.props.navigation;
     const item = JSON.parse(navigation.getParam('items', 'Somebody stole all our merchandise... Our team of best boyes is working on it. Come back later pls.'));
     this.item = item;
@@ -131,13 +129,16 @@ class ItemScreen extends Component {
        <Button
           onPress={ async () => {
             let watched = {};
+            var makeBlue = false;
             try {
                 watched = await AsyncStorage.getItem('watched') || {};
                 watched = JSON.parse(watched);
                 var watchedSaveKey = String(item.name);
                 if (watchedSaveKey in watched){
+                  makeBlue = true;
                   delete watched[watchedSaveKey]; 
                 } else {
+                  makeBlue = false;
                   watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description};
                 }
                 try {
@@ -155,7 +156,22 @@ class ItemScreen extends Component {
                 }
 
             }
-            this.forceUpdate(); //TODO it doesn't reload
+            console.log("forceUpdate");
+            if (makeBlue){
+              this.setState({
+                isLoading: false,
+                buttonTitle: 'Add to watched items',
+                buttonColor: 'blue'
+              })
+ 
+            } else {
+              this.setState({
+                isLoading: false,
+                buttonTitle: 'Delete from watched items',
+                buttonColor: 'grey'
+              })
+            }
+            this.forceUpdate();
           }}
           title={this.state.buttonTitle}
           color={this.state.buttonColor}

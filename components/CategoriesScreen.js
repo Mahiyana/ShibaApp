@@ -7,7 +7,7 @@ import { Icon } from 'react-native-elements'
 class CategoriesScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Categories',
+      title: 'Products',
       headerLeft: <Icon name="menu" size={35} onPress={ () => navigation.toggleDrawer() } />
     }
   };
