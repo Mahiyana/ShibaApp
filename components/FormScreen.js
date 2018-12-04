@@ -105,8 +105,8 @@ class FormScreen extends Component {
         <Button
           onPress={() => { 
             const formValues = this.formGenerator.getValues();
-            if (Object.values(formValues).includes('') || !formValues.terms ){
-              Alert.alert('Little problem', 'All fields are required. Please fill them in. Or maybe you are trying to avoid accepting our awesome Terms of Use, huh?')
+            if (Object.values(formValues).includes('') ){
+              Alert.alert('Little problem', 'All fields are required. Please fill them in.')
             } else {
               this.props.navigation.navigate('FormWalidate', {
                 formData: JSON.stringify(formValues),
