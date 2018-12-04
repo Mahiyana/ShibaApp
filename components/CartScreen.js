@@ -55,7 +55,7 @@ class CartScreen extends Component {
         </View>
       )
     }
-    if(this.state.cartItems){
+    if(this.state.cartItems && Object.keys(this.state.cartItems).length != 0){
     var titledItems = [];
     this.state.cartItems.map((item,i) => {
         var tempItem = item;
@@ -79,8 +79,24 @@ class CartScreen extends Component {
                 subtitle={item.price}
                 rightIcon={<Icon name={'delete'} size={20}/>}
                 onPress={() => {
-                  var alertString = item.description + "\n" + item.price + "$\n In cart:" + item.howmany;
-                  Alert.alert(item.name, alertString);
+                  Alert.alert(
+                    'Delete Item?',
+                    'This action will delete ' + item.name + '. Are you sure you want to do this?',
+                    [
+                      {text: 'Cancel', onPress: () => null, style: 'cancel'},
+                      {text: 'Delete it', onPress: async () => {
+                        AsyncStorage.getItem('cart').then((cart) => {
+                          cart = JSON.parse(cart);
+                          var index =  cart.findIndex(i => i.name === item.name);
+                          cart.splice(index,1);
+                          AsyncStorage.setItem('cart', JSON.stringify(cart)).then(() => {
+                            this.state.cartItems = cart;
+                            this.forceUpdate();
+                          });
+                        });
+                      }},
+                    ], {}
+                  ); 
                 }}
               />
             ))
