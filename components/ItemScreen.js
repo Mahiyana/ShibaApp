@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { Alert, Button, View, Text, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
+import { Image, Alert, Button, View, Text, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
 import {createStackNavigator, NavigationEvents} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 import { Icon } from 'react-native-elements'
+
+const IMAGES = {
+  shiba_de_lux: require('./img/shiba_de_lux.jpg'),
+  robo_shiba: require('./img/robo_shiba.jpg'),
+  nice_comb: require('./img/nice_comb.jpg'),
+  nicer_comb: require('./img/nicer_comb.jpg'),
+}
 
 class ItemScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -83,9 +90,13 @@ class ItemScreen extends Component {
     return (
       <View style={{flexDirection: 'column',flex: 1}}>
         <ScrollView>
-        <Text>{item.name}</Text>
-        <Text>{item.price}$</Text>
-        <Text>{item.description}</Text>
+        <Image
+          source={IMAGES[item.img]}
+          style={{width: 400, height: 400, margin:5}}
+        />
+        <Text style={{fontSize: 15}}>{item.name}</Text>
+        <Text style={{fontSize: 15}}>{item.price}$</Text>
+        <Text style={{fontSize: 15}}>{item.description}</Text>
         </ScrollView>
         <View style={[{ width: "95%", margin: 10, alignSelf: "flex-end"}]}>
         <Button
@@ -96,7 +107,7 @@ class ItemScreen extends Component {
                 cart = JSON.parse(cart);
                 var itemIndex = cart.findIndex(x => x.name==item.name);
                 if (itemIndex == -1){
-                  cart.push({"name": item.name, "price": item.price, "description": item.description, "howmany": 1});
+                  cart.push({"name": item.name, "price": item.price, "description": item.description, "img": item.img, "howmany": 1});
                 } else {
                   cart[itemIndex].howmany = parseInt(cart[itemIndex].howmany) + 1;
                 }
@@ -105,7 +116,7 @@ class ItemScreen extends Component {
                 } catch (error) {
                 }            
             } catch (error) {
-                cart = [{"name": item.name, "price": item.price, "description": item.description, "howmany": 1}];
+                cart = [{"name": item.name, "price": item.price, "description": item.description, "img": item.img, "howmany": 1}];
                 try {
                     await AsyncStorage.setItem('cart', JSON.stringify(cart));
                 } catch (error) {
@@ -139,7 +150,7 @@ class ItemScreen extends Component {
                   delete watched[watchedSaveKey]; 
                 } else {
                   makeBlue = false;
-                  watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description};
+                  watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description, "img": item.img};
                 }
                 try {
                     await AsyncStorage.setItem('watched', JSON.stringify(watched));
@@ -148,7 +159,7 @@ class ItemScreen extends Component {
             } catch (error) {
                 var watchedSaveKey = String(item.name);
                 watched = {}
-                watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description};
+                watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description, "img":item.img};
                 //watched = { watchedSaveKey: {"name": item.name, "price": item.price, "description": item.description}};
                 try {
                     await AsyncStorage.setItem('watched', JSON.stringify(watched));
