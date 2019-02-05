@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Alert, Button, View, Text, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
+import { Image, ImageBackground, Alert, Button, View, Text, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
 import {createStackNavigator, NavigationEvents} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 import { Icon } from 'react-native-elements'
@@ -34,13 +34,15 @@ class ItemScreen extends Component {
         this.setState({
           isLoading: false,
           buttonTitle: 'Delete from watched items',
-          buttonColor: 'grey'
+          buttonColor: 'grey',
+          watchedIcon: require('./img/full_heart.png'),
         })
       } else {
        this.setState({
           isLoading: false,
           buttonTitle: 'Add to watched items',
-          buttonColor: 'blue'
+          buttonColor: 'blue',
+          watchedIcon: require('./img/empty_heart.png'),
         })
       }
     })
@@ -59,13 +61,15 @@ class ItemScreen extends Component {
         this.setState({
           isLoading: false,
           buttonTitle: 'Delete from watched items',
-          buttonColor: 'grey'
+          buttonColor: 'grey',
+          watchedIcon: require('./img/full_heart.png'),
         })
       } else {
        this.setState({
           isLoading: false,
           buttonTitle: 'Add to watched items',
-          buttonColor: 'blue'
+          buttonColor: 'blue',
+          watchedIcon: require('./img/empty_heart.png'),
         })
       }
     })
@@ -90,10 +94,17 @@ class ItemScreen extends Component {
     return (
       <View style={{flexDirection: 'column',flex: 1}}>
         <ScrollView>
-        <Image
+        <ImageBackground 
           source={IMAGES[item.img]}
-          style={{width: 400, height: 400, margin:5}}
-        />
+          style={{width: 400, height: 400, margin:5, position: 'relative'}}
+        >
+          <View style={{position: 'absolute', top:10, right:10}}>
+            <Image 
+              source={this.state.watchedIcon}
+              style={{width: 40, height: 40}}
+            />
+          </View>
+        </ImageBackground>
         <Text style={{fontSize: 15}}>{item.name}</Text>
         <Text style={{fontSize: 15}}>{item.price}$</Text>
         <Text style={{fontSize: 15}}>{item.description}</Text>
