@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
 import {createStackNavigator, NavigationEvents} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
-import { StyleSheet, ScrollView, ActivityIndicator, Text, View  } from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator, Text, View, Image  } from 'react-native';
 import { Icon } from 'react-native-elements'
+
+const IMAGES = {
+  shiba_de_lux: require('./img/shiba_de_lux.jpg'),
+  robo_shiba: require('./img/robo_shiba.jpg'),
+  nice_comb: "http://www.coastalpet.com/media/website/ItemImages/W564_____NCL00.jpg", //require('./img/nice_comb.jpg'),
+  nicer_comb: require('./img/nicer_comb.jpg'),
+}
+
+const Row = (props) => (
+  <View style={{flex:1, flexDirection: 'row'}}> //Don't forget this
+    <Image source={props.image}>
+      <Text>{props.title}</Text>
+    </Image>
+  </View>
+)
 
 class CategoryScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -33,6 +48,7 @@ class CategoryScreen extends Component {
             items.map((item, i) => (
               <ListItem
                 key={i}
+                avatar={IMAGES[item.img]}
                 title={item.name}
                 onPress={() => {
                   this.props.navigation.navigate('Item', {
