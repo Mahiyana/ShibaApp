@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, ImageBackground, Alert, Button, View, Text, AsyncStorage, ScrollView, ActivityIndicator } from 'react-native';
+import { Image, ImageBackground, Alert, Button, View, Text, AsyncStorage, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import {createStackNavigator, NavigationEvents} from 'react-navigation';
 import { List, ListItem } from 'react-native-elements';
 import { Icon } from 'react-native-elements'
@@ -98,12 +98,65 @@ class ItemScreen extends Component {
           source={IMAGES[item.img]}
           style={{width: 400, height: 400, margin:5, position: 'relative'}}
         >
-          <View style={{position: 'absolute', top:10, right:10}}>
-            <Image 
+          <TouchableOpacity 
+            style={{position: 'absolute', top:10, right:10}}
+
+          onPress={ async () => {
+            let watched = {};
+            var makeBlue = false;
+            try {
+                watched = await AsyncStorage.getItem('watched') || {};
+                watched = JSON.parse(watched);
+                var watchedSaveKey = String(item.name);
+                if (watchedSaveKey in watched){
+                  makeBlue = true;
+                  delete watched[watchedSaveKey]; 
+                } else {
+                  makeBlue = false;
+                  watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description, "img": item.img};
+                }
+                try {
+                    await AsyncStorage.setItem('watched', JSON.stringify(watched));
+                } catch (error) {
+                }            
+            } catch (error) {
+                var watchedSaveKey = String(item.name);
+                watched = {}
+                watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description, "img":item.img};
+                //watched = { watchedSaveKey: {"name": item.name, "price": item.price, "description": item.description}};
+                try {
+                    await AsyncStorage.setItem('watched', JSON.stringify(watched));
+                } catch (error) {
+                }
+
+            }
+            console.log("forceUpdate");
+            if (makeBlue){
+              this.setState({
+                isLoading: false,
+                buttonTitle: 'Add to watched items',
+                buttonColor: 'blue',
+                watchedIcon: require('./img/empty_heart.png'),
+              })
+ 
+            } else {
+              this.setState({
+                isLoading: false,
+                buttonTitle: 'Delete from watched items',
+                buttonColor: 'grey',
+                watchedIcon: require('./img/full_heart.png'),
+              })
+            }
+            this.forceUpdate();
+          }}
+ 
+
+          >
+            <Image
               source={this.state.watchedIcon}
               style={{width: 40, height: 40}}
             />
-          </View>
+          </TouchableOpacity>
         </ImageBackground>
         <Text style={{fontSize: 15}}>{item.name}</Text>
         <Text style={{fontSize: 15}}>{item.price}$</Text>
@@ -146,60 +199,6 @@ class ItemScreen extends Component {
           title="Buy"
         />
         </View>
-
-       <View style={[{ width: "95%", margin: 10}]}>
-       <Button
-          onPress={ async () => {
-            let watched = {};
-            var makeBlue = false;
-            try {
-                watched = await AsyncStorage.getItem('watched') || {};
-                watched = JSON.parse(watched);
-                var watchedSaveKey = String(item.name);
-                if (watchedSaveKey in watched){
-                  makeBlue = true;
-                  delete watched[watchedSaveKey]; 
-                } else {
-                  makeBlue = false;
-                  watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description, "img": item.img};
-                }
-                try {
-                    await AsyncStorage.setItem('watched', JSON.stringify(watched));
-                } catch (error) {
-                }            
-            } catch (error) {
-                var watchedSaveKey = String(item.name);
-                watched = {}
-                watched[watchedSaveKey] = {"name": item.name, "price": item.price, "description": item.description, "img":item.img};
-                //watched = { watchedSaveKey: {"name": item.name, "price": item.price, "description": item.description}};
-                try {
-                    await AsyncStorage.setItem('watched', JSON.stringify(watched));
-                } catch (error) {
-                }
-
-            }
-            console.log("forceUpdate");
-            if (makeBlue){
-              this.setState({
-                isLoading: false,
-                buttonTitle: 'Add to watched items',
-                buttonColor: 'blue'
-              })
- 
-            } else {
-              this.setState({
-                isLoading: false,
-                buttonTitle: 'Delete from watched items',
-                buttonColor: 'grey'
-              })
-            }
-            this.forceUpdate();
-          }}
-          title={this.state.buttonTitle}
-          color={this.state.buttonColor}
-        />
-        </View>
-
      </View>
     );
   }
