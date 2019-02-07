@@ -78,10 +78,13 @@ class WatchedScreen extends Component {
                         })  
                       }},
                       {text: 'Delete it!', onPress: async () => {
-                        this.state.watchedItems
-                        delete this.state.watchedItems[item.name];
+                        console.log(this.state.watchedItems);
+                        console.log(item.name);
+                        var newWatchedItems = this.state.watchedItems
+                        delete newWatchedItems[item.name];
+                        console.log(newWatchedItems);
                         AsyncStorage.setItem('watched', JSON.stringify(this.state.watchedItems)).then(() => {
-                          this.state.watchedItems = null;
+                          this.state.watchedItems = newWatchedItems;
                           this.forceUpdate();
                         });
                       }},
