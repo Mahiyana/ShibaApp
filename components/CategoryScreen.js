@@ -11,13 +11,6 @@ const IMAGES = {
   nicer_comb: require('./img/nicer_comb.jpg'),
 }
 
-const Row = (props) => (
-  <View style={{flex:1, flexDirection: 'row'}}> //Don't forget this
-    <Image source={props.image}>
-      <Text>{props.title}</Text>
-    </Image>
-  </View>
-)
 
 class CategoryScreen extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -48,7 +41,7 @@ class CategoryScreen extends Component {
             items.map((item, i) => (
               <ListItem
                 key={i}
-                avatar={IMAGES[item.img]}
+                leftAvatar = {{ source: { uri: item.img } }}
                 title={item.name}
                 onPress={() => {
                   this.props.navigation.navigate('Item', {

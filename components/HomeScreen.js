@@ -26,7 +26,7 @@ class HomeScreen extends Component {
   }
   
   componentDidMount(){
-  return fetch('http://10.0.0.238:8000/') //ip -h address show (i musi być w tej samej sieci!!!)
+  return fetch('http://10.182.12.88:8000/') //ip -h address show (i musi być w tej samej sieci!!!)
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
